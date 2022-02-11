@@ -1,9 +1,23 @@
 <?php
-// General
-define('BASE_PATH', 'soundapp/');
+class Config {
+    // General
+    const BASE_PATH = 'soundapp/';
 
-// Database
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'soundapp');
+    // Filetypes
+    const IMAGE_TYPES = array(
+        'image/jpeg',
+        'image/jpg',
+        'image/png',
+        'image/gif',
+    );
+    const AUDIO_TYPES = array(
+        'audio/mpeg',
+        'audio/ogg',
+    );
+
+    // Database
+    const DB_HOST = 'localhost';
+    const DB_USER = 'root';
+    const DB_PASSWORD = 'root';
+    const DB_NAME = 'soundapp';
+}
