@@ -6,4 +6,4 @@ define('BASE_PATH', 'soundapp/');
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'root');
-define('DB_NAME', 'mdb');
+define('DB_NAME', 'soundapp');
