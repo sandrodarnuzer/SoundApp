@@ -43,3 +43,7 @@ function get_files($files) {
         );
     }
 }
+
+function get_file_path($cover_file, $album_id) {
+    return '/' . Config::BASE_PATH . 'files/' . $album_id . '/' . $cover_file; 
+}

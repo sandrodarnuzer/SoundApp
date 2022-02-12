@@ -1,5 +1,4 @@
 <?php
-// header("Location: new");
 if (isset($_POST['createalbum'])) {
     $title = $_POST['albumtitle'];
     $description = $_POST['albumdescription'];
@@ -31,7 +30,7 @@ if (isset($_POST['createalbum'])) {
         move_uploaded_file($cover_file['tmp_name'], $cover_file_path);
 
         foreach ($song_files as $song_file) {
-            $song_file_name = $song_file['name'];
+            $song_file_name = str_replace(' ', '_', $song_file['name']);
             
             Database::query(
                 "INSERT INTO songs (fid_album, song_file) VALUES (?, ?)",
@@ -44,3 +43,4 @@ if (isset($_POST['createalbum'])) {
         }
     }
 }
+redirect("/");
