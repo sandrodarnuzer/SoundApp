@@ -15,7 +15,7 @@
         <br>
         <label for="albumsongs">Musiktitel</label>
         <br>
-        <input type="file" name="albumsongs[]" id="albumsongs" multiple>
+        <input type="file" name="albumsongs[]" id="albumsongs" multiple accept=".mp3, .ogg">
         <br>
         <button type="submit" name="createalbum">Hinzufügen</button>
     </form>
