@@ -1,7 +1,7 @@
 <?php
 class Config {
     // General
-    const BASE_PATH = 'soundapp/';
+    const BASE_PATH = '/soundapp';
 
     // Filetypes
     const IMAGE_TYPES = array(

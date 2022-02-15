@@ -43,4 +43,4 @@ if (isset($_POST['createalbum'])) {
         }
     }
 }
-redirect("/");
+redirect('/');

@@ -15,8 +15,8 @@ class Router {
         $uri = strpos($uri, "?") ? substr($uri, 0, strpos($uri, "?")) : $uri;
         $uri = rtrim($uri, '/');
         $path = rtrim($path, '/');
-    
-        if ($uri === '/' . rtrim(Config::BASE_PATH, '/') . $path) {
+
+        if ($uri === rtrim(Config::BASE_PATH, '/') . $path) {
             render($page);
         }
     }

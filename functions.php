@@ -1,8 +1,8 @@
 <?php
 function render(string $page) {
-    include $_SERVER['DOCUMENT_ROOT'] . '/' . Config::BASE_PATH . 'components/' . 'header.php';
-    include $_SERVER['DOCUMENT_ROOT'] . '/' . Config::BASE_PATH . 'pages/' . $page . '.php';
-    include $_SERVER['DOCUMENT_ROOT'] . '/' . Config::BASE_PATH . 'components/' . 'footer.php';
+    include $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH, '/') . '/components/' . 'header.php';
+    include $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH, '/') . '/pages/' . $page . '.php';
+    include $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH, '/') . '/components/' . 'footer.php';
 }
 
 function pre($content) {
@@ -12,7 +12,7 @@ function pre($content) {
 }
 
 function redirect(string $path) {
-    $path = '/' . rtrim(Config::BASE_PATH, '/') . $path;
+    $path = rtrim(Config::BASE_PATH, '/') . $path;
     header("Location: ${path}");
     exit();
 }
@@ -45,5 +45,5 @@ function get_files($files) {
 }
 
 function get_file_path($cover_file, $album_id) {
-    return '/' . Config::BASE_PATH . 'files/' . $album_id . '/' . $cover_file; 
+    return rtrim(Config::BASE_PATH, '/') . '/files/' . $album_id . '/' . $cover_file; 
 }
