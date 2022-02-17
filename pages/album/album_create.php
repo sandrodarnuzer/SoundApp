@@ -4,7 +4,8 @@ if (isset($_POST['createalbum'])) {
     $description = $_POST['albumdescription'];
 
     $cover_file = $_FILES['albumcover'];
-    $song_files = iterator_to_array(get_files($_FILES['albumsongs']));
+    $song_files = iterator_to_array(get_files($_FILES, $_POST));
+    pre($song_files);
 
 
     if (check_file_type($cover_file, Config::IMAGE_TYPES) && check_file_types($song_files, Config::AUDIO_TYPES)) {
@@ -19,7 +20,7 @@ if (isset($_POST['createalbum'])) {
 
         $album_id = Database::$insert_id;
 
-        $folder_path = $_SERVER['DOCUMENT_ROOT'] . '/' . Config::BASE_PATH . 'files/' . $album_id;
+        $folder_path = $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH) . '/files/' . $album_id;
         $cover_file_path = $folder_path . '/' . $cover_file_name;
 
 
@@ -30,16 +31,17 @@ if (isset($_POST['createalbum'])) {
         move_uploaded_file($cover_file['tmp_name'], $cover_file_path);
 
         foreach ($song_files as $song_file) {
-            $song_file_name = str_replace(' ', '_', $song_file['name']);
+            $song_file_name = uniqid(). '.mp3';
+            $song_name = $song_file['name'];
             
             Database::query(
-                "INSERT INTO songs (fid_album, song_file) VALUES (?, ?)",
-                'is',
-                $album_id, $song_file_name,
+                "INSERT INTO songs (fid_album, song_file, name) VALUES (?, ?, ?)",
+                'iss',
+                $album_id, $song_file_name, $song_name
             );
 
             $song_file_path = $folder_path . '/' . $song_file_name;
-            move_uploaded_file($song_file['tmp_name'], $song_file_path);
+            move_uploaded_file($song_file['file'], $song_file_path);
         }
     }
 }

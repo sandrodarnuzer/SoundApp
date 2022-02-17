@@ -24,7 +24,7 @@ function get_mime_type(string $file_path): string {
 
 function check_file_types(array $files, array $file_types) {
     foreach ($files as $file) {
-        if (!in_array(get_mime_type($file['tmp_name']), $file_types)) return false;
+        if (!in_array(get_mime_type($file['file']), $file_types)) return false;
     }
     return true;
 }
@@ -34,13 +34,23 @@ function check_file_type(array $file, array $file_types) {
     return true;
 }
 
-function get_files($files) {
-    for ($i = 0; $i < count($files['name']); $i++) {
-        yield array(
-            'name' => $files['name'][$i],
-            'type' => $files['type'][$i],
-            'tmp_name' => $files['tmp_name'][$i],
-        );
+// function get_files($files) {
+//     for ($i = 0; $i < count($files['name']); $i++) {
+//         yield array(
+//             'name' => $files['name'][$i],
+//             'type' => $files['type'][$i],
+//             'tmp_name' => $files['tmp_name'][$i],
+//         );
+//     }
+// }
+function get_files(array $files, array $data) {
+    for ($i = 0; $i < $data['songsadded']; $i++) {
+        if (isset($files["albumsongfile-${i}"]) && isset($data["albumsongname-${i}"])) {
+            yield array(
+                'name' => $data["albumsongname-${i}"],
+                'file' => $files["albumsongfile-${i}"]['tmp_name'],
+            );
+        }
     }
 }
 

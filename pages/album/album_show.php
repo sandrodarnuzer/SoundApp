@@ -13,13 +13,16 @@ if (isset($_GET['id'])) {
     
     
         $result = Database::query(
-            "SELECT song_file, fid_album FROM songs WHERE fid_album=?",
+            "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
             'i',
             $album_id,
         );
         $songs = $result->fetch_all(MYSQLI_ASSOC);
         $songs = array_map(function ($song) {
-            return get_file_path($song['song_file'], $song['fid_album']);
+            return array(
+                'name' => $song['name'],
+                'file' => get_file_path($song['song_file'], $song['fid_album']),
+            );
         }, $songs);
     }
 }
@@ -35,10 +38,10 @@ if (isset($_GET['id'])) {
 
                 <div class="song" data-song="<?=$index + 1?>">
                     <audio>
-                        <source src="<?=$song?>" type="audio/mp3">
+                        <source src="<?=$song['file']?>" type="audio/mp3">
                         Your browser does not support the audio tag.
                     </audio>
-                    <span><?=$index?></span>
+                    <span><?=$song['name']?></span>
                     <button class="button-play">Play</button>
                     <button class="button-stop">Stop</button>
                     <button class="button-queue">Add Queue</button>
