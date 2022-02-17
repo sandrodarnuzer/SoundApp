@@ -1,3 +1,76 @@
-h1 {
+:root {
+    --primary: #7E81C6;
+    --error: #EA5A5A;
+    --valid: #57ED9B;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.songfiles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.songfile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+textarea {
+    resize: none;
+}
+
+input:not([type='file']), textarea {
+    display: block;
+    border: none;
+    border-left: 0.3rem solid transparent;
+    outline: none;
+    background-color: rgb(245, 245, 245);
+    padding: .5em 1em;
+    padding-left: 0.7em;
+    border-radius: .5em;
+}
+
+input:not([type='file']):hover, textarea:hover {
+    background-color: rgb(235, 235, 235);
+}
+
+input:not([type='file']):invalid, textarea:invalid {
+    border-color: var(--error);
+}
+
+input:not([type='file']):valid:required, textarea:valid:required {
+    border-color: var(--valid);
+}
+
+button {
+    outline: none;
+    background-color: var(--primary);
+    border-radius: .5em;
+    border: none;
+    color: white;
+    padding: .3em 1em;
+}
+
+button.large {
+    font-size: 1.2rem;
+}
+
+button:hover {
+    cursor: pointer;
+    opacity: 50%;
+}
+
+.button-remove {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    padding: 0 .5em;
     color: black;
 }
