@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['createalbum'])) {
+if (isset($_POST['songsadded'])) {
     $title = $_POST['albumtitle'];
     $description = $_POST['albumdescription'];
 
@@ -43,4 +43,4 @@ if (isset($_POST['createalbum'])) {
         }
     }
 }
-redirect('/');
+// redirect('/');

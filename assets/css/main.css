@@ -1,5 +1,6 @@
 :root {
     --primary: #7E81C6;
+    --secondary: #e8edfd;
     --error: #EA5A5A;
     --valid: #57ED9B;
 }
@@ -62,9 +63,17 @@ button.large {
     font-size: 1.2rem;
 }
 
-button:hover {
+button:not(:disabled):hover {
     cursor: pointer;
+    opacity: 75%;
+}
+
+button:disabled {
     opacity: 50%;
+}
+
+button:disabled:hover {
+    cursor: not-allowed;
 }
 
 .button-remove {
@@ -74,3 +83,76 @@ button:hover {
     padding: 0 .5em;
     color: black;
 }
+
+.control-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5em 1em;
+}
+
+.control-buttons img {
+    width: 16px;
+}
+
+/* Album */
+
+.album-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.album {
+    background-color: rgb(235, 235, 235);
+    display: grid;
+    width: fit-content;
+    grid-template-columns: auto auto;
+    gap: 1rem;
+    border-radius: 1rem;
+    padding: 1rem;
+    transition: transform .1s linear;
+}
+/* .album:hover {
+    transform: scale(1.01);
+    background-color: var(--secondary);
+} */
+
+.album-cover {
+    display: block;
+    width: clamp(200px, 20vw, 300px);
+    height: clamp(200px, 20vw, 300px);
+    object-fit: cover;
+    border-radius: 1rem;
+}
+
+.album-info {
+    margin-left: 0;
+}
+
+.songs {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.song {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+}
+.song-title {
+    display: block;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.song-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: .5rem;
+}
+

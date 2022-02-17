@@ -3,7 +3,7 @@ if (isset($_GET['id'])) {
     $album_id = $_GET['id'];
 
     $result = Database::query(
-        "SELECT title, cover_file, description FROM album WHERE id=?",
+        "SELECT id, title, cover_file, description FROM album WHERE id=?",
         'i',
         $album_id,
     );
@@ -30,25 +30,55 @@ if (isset($_GET['id'])) {
 <main>
 
     <?php if (isset($album)): ?>
-        <div>
-            <h1><?= $album['title'] ?></h1>
-            <p><?= $album['description'] ?></p>
-            <img src="<?= $cover_path ?>" alt="Cover" class="album-cover">
-            <?php foreach ($songs as $index => $song) : ?>
-
-                <div class="song" data-song="<?=$index + 1?>">
-                    <audio>
-                        <source src="<?=$song['file']?>" type="audio/mp3">
-                        Your browser does not support the audio tag.
-                    </audio>
-                    <span><?=$song['name']?></span>
-                    <button class="button-play">Play</button>
-                    <button class="button-stop">Stop</button>
-                    <button class="button-queue">Add Queue</button>
-                </div>
-
-            <?php endforeach ?>
-            <button class="button-all">Play all</button>
+        <div class="album">
+            <?php
+                $album_id = $album['id'];
+                $cover_path = get_file_path($album['cover_file'], $album_id);
+            ?>
+            <img src="<?=$cover_path?>" alt="" class="album-cover">
+            <div class="album-info">
+                <h2><?=$album['title']?></h2>
+                <?php
+                    $result = Database::query(
+                        "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
+                        'i',
+                        $album_id,
+                    );
+                    if ($result->num_rows > 0) {
+                        $songs = $result->fetch_all(MYSQLI_ASSOC);
+                        $songs = array_map(function ($song) {
+                            return array(
+                                'name' => $song['name'],
+                                'file' => get_file_path($song['song_file'], $song['fid_album']),
+                            );
+                        }, $songs);
+                    }
+                ?>
+                <?php if (isset($songs)): ?>
+                    <div class="songs">
+                        <?php foreach ($songs as $index_song => $song): ?>
+                            <div class="song" data-song="<?=$index_song + 1?>">
+                                <audio>
+                                    <source src="<?=$song['file']?>" type="audio/mp3">
+                                    Your browser does not support the audio tag.
+                                </audio>
+                                <span class="song-title"><?=$song['name']?></span>
+                                <div class="song-buttons">
+                                    <button class="button-play control-buttons"><img src="assets/img/play.png" alt=""></button>
+                                    <button class="button-queue control-buttons"><img src="assets/img/add-list.png" alt=""></button>
+                                </div>
+                            </div>
+                        <?php endforeach ?>
+                        <div class="song-buttons">
+                            <button class="control-buttons" id="button-stop" disabled><img src="assets/img/stop.png" alt=""></button>
+                            <button class="control-buttons" id="button-play-pause"><img id="icon-play-pause" src="assets/img/play.png" alt=""></button>
+                            <button class="control-buttons" id="button-next"><img src="assets/img/fast-forward.png" alt=""></button>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <h3>Keine Songs vorhanden</h3>
+                <?php endif ?>
+            </div>
         </div>
     <?php else: ?>
         <h1>No album</h1>
@@ -56,36 +86,56 @@ if (isset($_GET['id'])) {
 </main>
 <script>
     const songs = document.querySelectorAll(".song");
-    let queue = [];
+    const buttonPlayPause = document.getElementById('button-play-pause');
+    const iconPlayPause = document.getElementById('icon-play-pause');
+    const buttonNext = document.getElementById('button-next');
+    const buttonStop = document.getElementById('button-stop');
 
-    document.querySelector(".button-all").addEventListener("click" , () => {
-        for (let i = 1; i <= songs.length; i++) {
-            queue.push(i);
+    let queue = [];
+    let isPlaying = false;
+    let currentSong;
+
+    buttonPlayPause.addEventListener('click' , () => {
+        if (currentSong) {
+            if (isPlaying) stopSong(currentSong, true);
+            else playSong(currentSong);
+        } else {
+            for (let i = 1; i <= songs.length; i++) {
+                queue.push(i);
+            }
+            playNext();
         }
-        playNext();
     });
 
-    let currentSong;
+    buttonNext.addEventListener('click', () => {
+        if (queue.length) playNext();
+    });
+
+    buttonStop.addEventListener('click', () => {
+        if (currentSong) {
+            stopSong(currentSong);
+        }
+        isPlaying = false;
+        queue = [];
+        iconPlayPause.src = "assets/img/play.png";
+        buttonStop.disabled = true;
+    });
+
 
     songs.forEach(song => {
         const songNr = parseInt(song.dataset.song);
-        const buttonPlay = song.querySelector(".button-play");
-        const buttonStop = song.querySelector(".button-stop");
-        const buttonQueue = song.querySelector(".button-queue");
+        const buttonPlay = song.querySelector(".song-buttons .button-play");
+        const buttonQueue = song.querySelector(".song-buttons .button-queue");
         const audio = song.querySelector("audio");
-        buttonStop.disabled = true;
 
-        buttonPlay.addEventListener("click", () => {
+        buttonPlay.addEventListener('click', () => {
             queue.unshift(songNr);
             playNext();
         });
 
-        buttonStop.addEventListener("click", () => stopSong(songNr));
+        buttonQueue.addEventListener('click', () => queue.push(songNr));
 
-        buttonQueue.addEventListener("click", () => queue.push(songNr));
-
-        audio.addEventListener("ended", () => {
-            stopSong(songNr);
+        audio.addEventListener('ended', () => {
             if (queue.length) playNext();
         });
     });
@@ -95,21 +145,32 @@ if (isset($_GET['id'])) {
     }
 
     function playSong(songNr) {
-        if (currentSong) stopSong(currentSong);
+        if (currentSong && currentSong != songNr) stopSong(currentSong);
         const audio = document.querySelector("[data-song='" + songNr + "'] audio");
-        const buttonStop = document.querySelector("[data-song='" + songNr + "'] .button-stop");
-        buttonStop.disabled = false,
+        const buttonPlay = document.querySelector("[data-song='" + songNr + "'] .button-play");
+        buttonPlay.disabled = true;
+        buttonStop.disabled = false;
         audio.play();
         currentSong = songNr;
+        togglePlayPause();
     }
 
-
-    function stopSong(songNr) {
+    function stopSong(songNr, pause = false) {
         const audio = document.querySelector("[data-song='" + songNr + "'] audio");
-        const buttonStop = document.querySelector("[data-song='" + songNr + "'] .button-stop");
-        buttonStop.disabled = true,
+        const buttonPlay = document.querySelector("[data-song='" + songNr + "'] .button-play");
         audio.pause();
-        audio.currentTime = 0;
-        currentSong = null;
+        if (!pause) {
+            buttonPlay.disabled = false;
+            audio.currentTime = 0;
+            currentSong = null;
+        }
+        togglePlayPause();
+    }
+
+    function togglePlayPause() {
+        if (!currentSong) return;
+        if (isPlaying) iconPlayPause.src = "assets/img/play.png";
+        else iconPlayPause.src = "assets/img/pause.png";
+        isPlaying = !isPlaying;
     }
 </script>
