@@ -5,8 +5,6 @@ if (isset($_POST['createalbum'])) {
 
     $cover_file = $_FILES['albumcover'];
     $song_files = iterator_to_array(get_files($_FILES, $_POST));
-    pre($song_files);
-
 
     if (check_file_type($cover_file, Config::IMAGE_TYPES) && check_file_types($song_files, Config::AUDIO_TYPES)) {
 
