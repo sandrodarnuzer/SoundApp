@@ -34,15 +34,6 @@ function check_file_type(array $file, array $file_types) {
     return true;
 }
 
-// function get_files($files) {
-//     for ($i = 0; $i < count($files['name']); $i++) {
-//         yield array(
-//             'name' => $files['name'][$i],
-//             'type' => $files['type'][$i],
-//             'tmp_name' => $files['tmp_name'][$i],
-//         );
-//     }
-// }
 function get_files(array $files, array $data) {
     for ($i = 0; $i < $data['songsadded']; $i++) {
         if (isset($files["albumsongfile-${i}"]) && isset($data["albumsongname-${i}"])) {
@@ -56,4 +47,39 @@ function get_files(array $files, array $data) {
 
 function get_file_path($cover_file, $album_id) {
     return rtrim(Config::BASE_PATH, '/') . '/files/' . $album_id . '/' . $cover_file; 
+}
+
+function square_image($image_path, $type) {
+
+    switch ($type) {
+        case 'jpeg':
+        case 'jpg':
+            $image = imagecreatefromjpeg($image_path);
+            break;
+        case 'png':
+            $image = imagecreatefrompng($image_path);
+            break;
+        case 'gif':
+            $image = imagecreatefromgif($image_path);
+            break;
+    }
+
+    $size = min(imagesx($image), imagesy($image));
+    $cropped = imagecrop($image, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+    if ($cropped !== FALSE) {
+        switch ($type) {
+            case 'jpeg':
+            case 'jpg':
+                imagejpeg($cropped, $image_path);
+                break;
+            case 'png':
+                imagepng($cropped, $image_path);
+                break;
+            case 'gif':
+                imagegif($cropped, $image_path);
+                break;
+        }
+        imagedestroy($cropped);
+    }
+    imagedestroy($image);
 }

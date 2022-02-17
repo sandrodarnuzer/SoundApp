@@ -4,11 +4,12 @@ if (isset($_POST['songsadded'])) {
     $description = $_POST['albumdescription'];
 
     $cover_file = $_FILES['albumcover'];
+    $cover_file_type = pathinfo($cover_file['name'], PATHINFO_EXTENSION);
     $song_files = iterator_to_array(get_files($_FILES, $_POST));
 
     if (check_file_type($cover_file, Config::IMAGE_TYPES) && check_file_types($song_files, Config::AUDIO_TYPES)) {
 
-        $cover_file_name = uniqid().'.jpg';
+        $cover_file_name = uniqid().'.'.$cover_file_type;
 
         Database::query(
             "INSERT INTO album (title, description, cover_file) VALUES (?, ?, ?)",
@@ -27,6 +28,7 @@ if (isset($_POST['songsadded'])) {
         }
 
         move_uploaded_file($cover_file['tmp_name'], $cover_file_path);
+        square_image($cover_file_path, $cover_file_type);
 
         foreach ($song_files as $song_file) {
             $song_file_name = uniqid(). '.mp3';
@@ -43,4 +45,4 @@ if (isset($_POST['songsadded'])) {
         }
     }
 }
-// redirect('/');
+redirect('/');

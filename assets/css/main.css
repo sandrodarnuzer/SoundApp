@@ -102,12 +102,14 @@ button:disabled:hover {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 2rem;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .album {
     background-color: rgb(235, 235, 235);
-    display: grid;
+    display: flex;
+    flex-direction: row;
     width: fit-content;
     grid-template-columns: auto auto;
     gap: 1rem;
@@ -115,6 +117,7 @@ button:disabled:hover {
     padding: 1rem;
     transition: transform .1s linear;
 }
+
 /* .album:hover {
     transform: scale(1.01);
     background-color: var(--secondary);
@@ -122,8 +125,8 @@ button:disabled:hover {
 
 .album-cover {
     display: block;
-    width: clamp(200px, 20vw, 300px);
-    height: clamp(200px, 20vw, 300px);
+    max-width: 400px;
+    width: 100%;
     object-fit: cover;
     border-radius: 1rem;
 }
@@ -156,3 +159,27 @@ button:disabled:hover {
     gap: .5rem;
 }
 
+@media (max-width: 1400px) {
+    .album-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 1000px) {
+    html {
+        font-size: 2rem;
+    }
+    .album {
+        flex-direction: column;
+        margin: 0 3rem;
+    }
+    .album-cover {
+        max-width: none;
+    }
+    .control-buttons {
+        padding: 1em 2em;
+    }
+    .control-buttons img {
+        width: 32px;
+    }
+}
