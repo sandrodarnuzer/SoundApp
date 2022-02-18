@@ -44,13 +44,14 @@ if ($result->num_rows > 0) {
                                             Your browser does not support the audio tag.
                                         </audio>
                                         <span class="song-title"><?=$song['name']?></span>
-                                        <div class="song-buttons">
+                                        <div class="song-buttons right">
                                             <button class="button-play control-buttons"><img src="assets/img/play.png" alt=""></button>
                                             <button class="button-stop control-buttons" disabled><img src="assets/img/stop.png" alt=""></button>
                                         </div>
                                     </div>
                                 <?php endforeach ?>
                             </div>
+                            <a href="show?id=<?=$album_id?>" class="song-link">Album anzeigen</a>
                         <?php else: ?>
                             <h3>Keine Songs vorhanden</h3>
                         <?php endif ?>

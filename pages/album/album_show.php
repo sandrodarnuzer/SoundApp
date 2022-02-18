@@ -28,61 +28,62 @@ if (isset($_GET['id'])) {
 }
 ?>
 <main>
-
-    <?php if (isset($album)): ?>
-        <div class="album">
-            <?php
-                $album_id = $album['id'];
-                $cover_path = get_file_path($album['cover_file'], $album_id);
-            ?>
-            <img src="<?=$cover_path?>" alt="" class="album-cover">
-            <div class="album-info">
-                <h2><?=$album['title']?></h2>
+    <div class="center">
+        <?php if (isset($album)): ?>
+            <div class="album flex-column">
                 <?php
-                    $result = Database::query(
-                        "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
-                        'i',
-                        $album_id,
-                    );
-                    if ($result->num_rows > 0) {
-                        $songs = $result->fetch_all(MYSQLI_ASSOC);
-                        $songs = array_map(function ($song) {
-                            return array(
-                                'name' => $song['name'],
-                                'file' => get_file_path($song['song_file'], $song['fid_album']),
-                            );
-                        }, $songs);
-                    }
+                    $album_id = $album['id'];
+                    $cover_path = get_file_path($album['cover_file'], $album_id);
                 ?>
-                <?php if (isset($songs)): ?>
-                    <div class="songs">
-                        <?php foreach ($songs as $index_song => $song): ?>
-                            <div class="song" data-song="<?=$index_song + 1?>">
-                                <audio>
-                                    <source src="<?=$song['file']?>" type="audio/mp3">
-                                    Your browser does not support the audio tag.
-                                </audio>
-                                <span class="song-title"><?=$song['name']?></span>
-                                <div class="song-buttons">
-                                    <button class="button-play control-buttons"><img src="assets/img/play.png" alt=""></button>
-                                    <button class="button-queue control-buttons"><img src="assets/img/add-list.png" alt=""></button>
+                <img src="<?=$cover_path?>" alt="" class="album-cover large-cover">
+                <div class="album-info">
+                    <h2><?=$album['title']?></h2>
+                    <?php
+                        $result = Database::query(
+                            "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
+                            'i',
+                            $album_id,
+                        );
+                        if ($result->num_rows > 0) {
+                            $songs = $result->fetch_all(MYSQLI_ASSOC);
+                            $songs = array_map(function ($song) {
+                                return array(
+                                    'name' => $song['name'],
+                                    'file' => get_file_path($song['song_file'], $song['fid_album']),
+                                );
+                            }, $songs);
+                        }
+                    ?>
+                    <?php if (isset($songs)): ?>
+                        <div class="songs">
+                            <?php foreach ($songs as $index_song => $song): ?>
+                                <div class="song" data-song="<?=$index_song + 1?>">
+                                    <audio>
+                                        <source src="<?=$song['file']?>" type="audio/mp3">
+                                        Your browser does not support the audio tag.
+                                    </audio>
+                                    <span class="song-title"><?=$song['name']?></span>
+                                    <div class="song-buttons right">
+                                        <button class="button-play control-buttons"><img src="assets/img/play.png" alt=""></button>
+                                        <button class="button-queue control-buttons"><img src="assets/img/add-list.png" alt=""></button>
+                                    </div>
                                 </div>
+                            <?php endforeach ?>
+                            <div class="song-buttons center">
+                                <button class="control-buttons" id="button-stop" disabled><img src="assets/img/stop.png" alt=""></button>
+                                <button class="control-buttons" id="button-play-pause"><img id="icon-play-pause" src="assets/img/play.png" alt=""></button>
+                                <button class="control-buttons" id="button-next"><img src="assets/img/fast-forward.png" alt=""></button>
                             </div>
-                        <?php endforeach ?>
-                        <div class="song-buttons">
-                            <button class="control-buttons" id="button-stop" disabled><img src="assets/img/stop.png" alt=""></button>
-                            <button class="control-buttons" id="button-play-pause"><img id="icon-play-pause" src="assets/img/play.png" alt=""></button>
-                            <button class="control-buttons" id="button-next"><img src="assets/img/fast-forward.png" alt=""></button>
                         </div>
-                    </div>
-                <?php else: ?>
-                    <h3>Keine Songs vorhanden</h3>
-                <?php endif ?>
+                    <?php else: ?>
+                        <h3>Keine Songs vorhanden</h3>
+                    <?php endif ?>
+                </div>
             </div>
-        </div>
-    <?php else: ?>
-        <h1>No album</h1>
-    <?php endif ?>
+        <?php else: ?>
+            <h1>No album</h1>
+        <?php endif ?>
+    </div>
 </main>
 <script>
     const songs = document.querySelectorAll(".song");
