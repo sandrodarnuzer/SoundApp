@@ -7,10 +7,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+
       - uses: actions/checkout@v2
-      - name: Upload files
-        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
         with:
-          server: ${{ secrets.FTP_HOST }}
-          username: ${{ secrets.FTP_USERNAME }}
+          php-version: '8.0'
+      - run: php ./scripts/build.php production
+      - name: Upload FTP
+        uses: sebastianpopp/ftp-action@releases/v2
+        with:
+          host: ${{ secrets.FTP_HOST }}
+          user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          localDir: "dist"
+          remoteDir: ""
