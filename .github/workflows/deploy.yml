@@ -14,11 +14,11 @@ jobs:
         with:
           php-version: '8.0'
       - run: php ./scripts/build.php production
-      - name: Upload FTP
-        uses: sebastianpopp/ftp-action@releases/v2
+      - name: Upload from dist via FTP
+        uses: airvzxf/ftp-deployment-action@latest
         with:
-          host: ${{ secrets.FTP_HOST }}
+          server: ${{ secrets.FTP_HOST }}
           user: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: "dist"
-          remoteDir: ""
+          local_dir: "./dist"
+          delete: "true"
