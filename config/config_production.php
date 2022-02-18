@@ -2,6 +2,10 @@
 class Config {
     // General
     const BASE_PATH = '/';
+    const AUTH = true;
+
+    const AUTH_USER = 'soundapp';
+    const AUTH_PASSWORD = 'ananas';
 
     // Filetypes
     const IMAGE_TYPES = array(

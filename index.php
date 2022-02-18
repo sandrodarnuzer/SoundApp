@@ -4,6 +4,16 @@ require_once __DIR__ . '/db/database.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/router.php';
 
+if (Config::AUTH) {
+    if (!isset($_SERVER['PHP_AUTH_USER'])) {
+        header('WWW-Authenticate: Basic realm="My Realm"');
+        header('HTTP/1.0 401 Unauthorized');
+        exit;
+    } else {
+        if (!($_SERVER['PHP_AUTH_USER'] === Config::AUTH_USER && $_SERVER['PHP_AUTH_PW'] === Config::AUTH_PASSWORD)) exit;
+    }
+}
+
 Database::connect();
 Router::get('/', 'album/album_index');
 
