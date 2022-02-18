@@ -36,6 +36,7 @@ if (isset($_GET['id'])) {
                     $cover_path = get_file_path($album['cover_file'], $album_id);
                 ?>
                 <img src="<?=$cover_path?>" alt="" class="album-cover large-cover">
+                
                 <div class="album-info">
                     <h2><?=$album['title']?></h2>
                     <?php
@@ -75,11 +76,13 @@ if (isset($_GET['id'])) {
                                 <button class="control-buttons" id="button-next"><img src="assets/img/fast-forward.png" alt=""></button>
                             </div>
                         </div>
-                    <?php else: ?>
-                        <h3>Keine Songs vorhanden</h3>
-                    <?php endif ?>
+                        <?php else: ?>
+                            <h3>Keine Songs vorhanden</h3>
+                            <?php endif ?>
+                            <a href="<?=path_to("/delete?id=${album_id}")?>" class="delete-link">Album Löschen</a>
                 </div>
             </div>
+
         <?php else: ?>
             <h1>No album</h1>
         <?php endif ?>

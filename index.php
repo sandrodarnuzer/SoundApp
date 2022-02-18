@@ -11,4 +11,6 @@ Router::get('/', 'album/album_index');
 Router::get('/new', 'album/album_new');
 Router::post('/create', 'album/album_create');
 
+Router::get('/delete', 'album/album_delete');
+
 Router::get('/show', 'album/album_show');

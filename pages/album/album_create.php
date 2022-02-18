@@ -19,7 +19,7 @@ if (isset($_POST['songsadded'])) {
 
         $album_id = Database::$insert_id;
 
-        $folder_path = $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH) . '/files/' . $album_id;
+        $folder_path = $_SERVER['DOCUMENT_ROOT'] . rtrim(Config::BASE_PATH, '/') . '/files/' . $album_id;
         $cover_file_path = $folder_path . '/' . $cover_file_name;
 
 

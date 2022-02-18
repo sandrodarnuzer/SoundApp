@@ -53,6 +53,18 @@ function get_file_path($cover_file, $album_id) {
     return rtrim(Config::BASE_PATH, '/') . '/files/' . $album_id . '/' . $cover_file; 
 }
 
+function delete_folder($folder) {
+    if (is_dir($folder)) { 
+        $files = scandir($folder);
+        foreach ($files as $file) { 
+            if ($file != "." && $file != "..") { 
+                unlink($folder. DIRECTORY_SEPARATOR .$file); 
+            }
+        }
+        rmdir($folder); 
+    }
+}
+
 function square_image($image_path, $type) {
 
     switch ($type) {
