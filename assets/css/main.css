@@ -1,6 +1,6 @@
 :root {
     --primary: #7E81C6;
-    --secondary: #e8edfd;
+    --secondary: #dde4fa;
     --error: #EA5A5A;
     --valid: #57ED9B;
 }
@@ -11,12 +11,55 @@
     margin: 0;
 }
 
+body {
+    display: flex;
+}
+
+nav {
+    height: 100vh;
+    width: fit-content;
+    min-width: 200px;
+    background-color: var(--primary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.nav-item {
+
+}
+
+.nav-link {
+    font-size: 1.3em;
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+main {
+    flex-grow: 1;
+    padding: 0 1rem;
+}
+
 .flex-column {
     flex-direction: column;
 }
 
 .flex-row {
     flex-direction: row;
+}
+
+.logo {
+    width: 100px;
 }
 
 .songfiles {
@@ -105,21 +148,22 @@ button:disabled:hover {
 }
 
 .song-link {
-    display: block;
+    display: inline-block;
     margin-top: 2rem;
     text-decoration: none;
     color: var(--primary);
 }
 
-.song-link:hover {
+a:hover {
     opacity: 50%;
 }
 
 .center {
     display: flex;
+    /* width: 100%; */
     justify-content: center;
     align-items: center;
-    height: 100%;
+    /* height: 100%; */
     margin-top: 1rem;
 }
 
@@ -147,11 +191,12 @@ button:disabled:hover {
     gap: 1rem;
     border-radius: 1rem;
     padding: 1rem;
-    transition: transform .1s linear;
+    transition: transform .25s linear, box-shadow .25s linear;
 }
 
-.album:hover {
-    background-color: var(--secondary);
+.album.hover:hover {
+    transform: translate(-0.4rem, -0.4rem);
+    box-shadow: .8rem .8rem .1rem rgb(214, 214, 214);
 }
 
 .album-cover {
@@ -194,6 +239,19 @@ button:disabled:hover {
 }
 
 @media (max-width: 1200px) {
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+    nav {
+        height: fit-content;
+        flex-direction: row;
+        width: 100%;
+    }
+    .nav-list {
+        flex-direction: row;
+        align-items: center;
+    }
     .album-container {
         flex-direction: column;
     }
@@ -203,12 +261,9 @@ button:disabled:hover {
 }
 
 @media (max-width: 800px) {
-    body {
-        font-size: 2rem;
-    }
     .album {
         flex-direction: column;
-        margin-inline: 1rem;
+        margin: 0 1rem;
     }
     .album-container .album {
         flex-direction: column;
@@ -220,6 +275,6 @@ button:disabled:hover {
         padding: 1em 2em;
     }
     .control-buttons img {
-        width: 32px;
+        width: 24px;
     }
 }

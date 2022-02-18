@@ -11,7 +11,7 @@ if ($result->num_rows > 0) {
     <?php if (isset($albums)): ?>
         <div class="album-container">
             <?php foreach ($albums as $index_album => $album): ?>
-                <div class="album">
+                <div class="album hover">
                     <?php
                     $album_id = $album['id'];
                         $cover_path = get_file_path($album['cover_file'], $album_id);
@@ -51,7 +51,7 @@ if ($result->num_rows > 0) {
                                     </div>
                                 <?php endforeach ?>
                             </div>
-                            <a href="show?id=<?=$album_id?>" class="song-link">Album anzeigen</a>
+                            <a href="<?=path_to("/show?id=${album_id}")?>" class="song-link">Album anzeigen</a>
                         <?php else: ?>
                             <h3>Keine Songs vorhanden</h3>
                         <?php endif ?>

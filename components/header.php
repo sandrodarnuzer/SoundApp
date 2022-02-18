@@ -7,3 +7,14 @@
     <title>SoundApp</title>
 </head>
 <body>
+<nav>
+    <img src="assets/img/sound-bars-pulse.png" class="logo" alt="">
+    <div class="nav-list">
+        <div class="nav-item">
+            <a href="<?=path_to('/')?>" class="nav-link">Alle Alben</a>
+        </div>
+        <div class="nav-item">
+            <a href="<?=path_to('/new')?>" class="nav-link">Neues Album</a>
+        </div>
+    </div>
+</nav>

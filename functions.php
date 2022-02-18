@@ -17,6 +17,10 @@ function redirect(string $path) {
     exit();
 }
 
+function path_to($destination) {
+    return rtrim(Config::BASE_PATH, '/') . $destination;
+}
+
 function get_mime_type(string $file_path): string {
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     return $finfo->file($file_path);
