@@ -3,6 +3,7 @@
 $items = array(
     'assets',
     'components',
+    'db',
     'pages',
     'functions.php',
     '.htaccess',
