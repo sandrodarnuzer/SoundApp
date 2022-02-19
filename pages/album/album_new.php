@@ -1,28 +1,33 @@
 <main>
-    <h1>Neues Album</h1>
-    <form action="create" method="post" enctype="multipart/form-data" name="albumform">
-        <label for="albumtitle">Titel</label>
-        <br>
-        <input type="text" name="albumtitle" id="albumtitle" required>
-        <br>
-        <label for="albumdescription">Beschreibung</label>
-        <br>
-        <textarea name="albumdescription" id="albumdescription" cols="30" rows="10" required></textarea>
-        <br>
-        <label for="albumcover">Album Cover</label>
-        <br>
-        <input type="file" name="albumcover" id="albumcover" accept=".jpeg, .jpg, .png, .gif" required>
-        <br>
-        <label for="albumsongs">Musiktitel</label>
-        <button type="button" id="addsong">Add</button>
-        <br>
-        <input type="hidden" name="songsadded" id="songsadded">
-        <div class="songfiles">
-            
-        </div>
-        <br>
-        <button class="large" type="button" name="createalbum" id="createalbum">Erstellen</button>
-    </form>
+    <div class="center">
+        <form action="create" method="post" enctype="multipart/form-data" name="albumform">
+            <div class="form-container">
+    
+                <div class="form-item">
+                    <label for="albumtitle">Titel</label>
+                    <input type="text" name="albumtitle" id="albumtitle" required>
+                </div>
+                <div class="form-item">
+                    <label for="albumdescription">Beschreibung</label>
+                    <textarea name="albumdescription" id="albumdescription" cols="30" rows="10" required></textarea>
+                </div>
+                <div class="form-item">
+                    <label for="albumcover">Album Cover</label>
+                    <input type="file" name="albumcover" id="albumcover" accept=".jpeg, .jpg, .png, .gif" required>
+                </div>
+                <div class="form-item">
+                    <label for="albumsongs">Musiktitel</label>
+                    <button type="button" id="addsong">Add</button>
+                    <input type="hidden" name="songsadded" id="songsadded">
+                </div>
+                <div class="songfiles"></div>
+                <div class="form-item">
+                    <button class="large" type="button" name="createalbum" id="createalbum">Erstellen</button>
+                </div>
+                <span id="error-message"></span>
+            </div>
+        </form>
+    </div>
 </main>
 <script>
     let songsAdded = 0;
@@ -50,7 +55,10 @@
     });
     
     buttonCreateAlbum.addEventListener('click', () => {
-        if (songFiles.childElementCount < 1 || !albumForm.checkValidity()) return;
+        if (songFiles.childElementCount < 1 || !albumForm.checkValidity()) {
+            document.getElementById('error-message').innerText = "Formular nicht korrekt ausgefüllt";
+            return;
+        }
         document.getElementById('songsadded').value = songsAdded;
         albumForm.submit();
     });

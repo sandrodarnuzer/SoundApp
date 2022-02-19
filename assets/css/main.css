@@ -62,41 +62,61 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
+    max-width: 90%;
+    position: relative;
+    top: -1.5rem;
 }
 
 .songfile {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
+    padding: .5rem;
 }
 
 textarea {
     resize: none;
 }
 
-input:not([type='file']), textarea {
-    display: block;
-    border: none;
-    border-left: 0.3rem solid transparent;
-    outline: none;
-    background-color: rgb(245, 245, 245);
-    padding: .5em 1em;
-    padding-left: 0.7em;
-    border-radius: .5em;
+#error-message {
+    color: var(--error);
 }
 
-input:not([type='file']):hover, textarea:hover {
+form {
+    max-width: 30rem;
+    flex-grow: 1;
+}
+
+.form-container {
     background-color: rgb(235, 235, 235);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem
+}
+
+.form-item {
+    display: grid;
+    grid-template-columns: 10rem auto;
+}
+
+input:not([type='file']), textarea {
+    border: none;
+    outline: none;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    padding: .5rem;
 }
 
 input:not([type='file']):invalid, textarea:invalid {
-    border-color: var(--error);
+    box-shadow: -0.25rem 0 0 0 var(--error);
 }
 
-input:not([type='file']):valid:required, textarea:valid:required {
-    border-color: var(--valid);
-}
+input:not([type='file']):valid, textarea:valid {
+    box-shadow: -0.25rem 0 0 0 var(--valid);
+}    
 
 button {
     outline: none;
@@ -105,6 +125,7 @@ button {
     border: none;
     color: white;
     padding: .3em 1em;
+    width: fit-content;
 }
 
 button.large {
@@ -164,10 +185,8 @@ a:hover {
 
 .center {
     display: flex;
-    /* width: 100%; */
     justify-content: center;
     align-items: center;
-    /* height: 100%; */
     margin-top: 1rem;
 }
 

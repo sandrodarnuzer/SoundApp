@@ -80,6 +80,7 @@ function square_image($image_path, $type) {
             break;
     }
 
+    if (imagesx($image) === imagesy($image)) return imagedestroy($image);
     $size = min(imagesx($image), imagesy($image));
     $cropped = imagecrop($image, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
     if ($cropped !== FALSE) {
