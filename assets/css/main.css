@@ -260,6 +260,13 @@ a:hover {
     white-space: nowrap;
     overflow: hidden;
 }
+.description {
+    max-width: 350px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
 .song-buttons {
     display: flex;
     flex-direction: row;

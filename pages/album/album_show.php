@@ -3,7 +3,7 @@ if (isset($_GET['id'])) {
     $album_id = $_GET['id'];
 
     $result = Database::query(
-        "SELECT id, title, cover_file, description FROM album WHERE id=?",
+        "SELECT id, title, description, cover_file, description FROM album WHERE id=?",
         'i',
         $album_id,
     );
@@ -39,6 +39,7 @@ if (isset($_GET['id'])) {
                 
                 <div class="album-info">
                     <h2><?=$album['title']?></h2>
+                    <p class="description" title="<?=$album['description']?>"><?=$album['description']?></p>
                     <?php
                         $result = Database::query(
                             "SELECT id, name, song_file, fid_album FROM songs WHERE fid_album=?",
