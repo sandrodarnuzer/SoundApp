@@ -32,7 +32,6 @@ if (isset($_POST['songsadded'])) {
 
         foreach ($song_files as $song_file) {
             $song_file_type = pathinfo($song_file['file_name'], PATHINFO_EXTENSION);
-            echo $song_file_type;
             $song_file_name = uniqid().'.'.$song_file_type;
             $song_name = $song_file['name'];
             

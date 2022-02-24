@@ -54,6 +54,9 @@ if ($result->num_rows > 0) {
                             <a href="<?=path_to("/show?id=${album_id}")?>" class="song-link">Album anzeigen</a>
                         <?php else: ?>
                             <h3>Keine Songs vorhanden</h3>
+                            <div>
+                                <a href="<?=path_to("/show?id=${album_id}")?>" class="song-link">Album anzeigen</a>
+                            </div>
                         <?php endif ?>
                     </div>
                 </div>

@@ -25,3 +25,5 @@ Router::get('/show', 'album/album_show');
 
 // Song
 Router::get('/song/delete', 'song/song_delete');
+Router::get('/song/new', 'song/song_new');
+Router::post('/song/create', 'song/song_create');

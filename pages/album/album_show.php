@@ -12,18 +12,18 @@ if (isset($_GET['id'])) {
         $cover_path = get_file_path($album['cover_file'], $album_id);
     
     
-        $result = Database::query(
-            "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
-            'i',
-            $album_id,
-        );
-        $songs = $result->fetch_all(MYSQLI_ASSOC);
-        $songs = array_map(function ($song) {
-            return array(
-                'name' => $song['name'],
-                'file' => get_file_path($song['song_file'], $song['fid_album']),
-            );
-        }, $songs);
+        // $result = Database::query(
+        //     "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
+        //     'i',
+        //     $album_id,
+        // );
+        // $songs = $result->fetch_all(MYSQLI_ASSOC);
+        // $songs = array_map(function ($song) {
+        //     return array(
+        //         'name' => $song['name'],
+        //         'file' => get_file_path($song['song_file'], $song['fid_album']),
+        //     );
+        // }, $songs);
     }
 }
 ?>
@@ -74,16 +74,21 @@ if (isset($_GET['id'])) {
                                     </div>
                                 </div>
                             <?php endforeach ?>
+                            <a href="<?=path_to("/song/new?album=${album_id}")?>" class="add-link right">Songs hinzufügen</a>
+
                             <div class="song-buttons center">
                                 <button class="control-buttons" id="button-stop" disabled><img src="assets/img/stop.png" alt=""></button>
                                 <button class="control-buttons" id="button-play-pause"><img id="icon-play-pause" src="assets/img/play.png" alt=""></button>
                                 <button class="control-buttons" id="button-next"><img src="assets/img/fast-forward.png" alt=""></button>
                             </div>
                         </div>
-                        <?php else: ?>
-                            <h3>Keine Songs vorhanden</h3>
-                            <?php endif ?>
-                            <a href="<?=path_to("/delete?id=${album_id}")?>" class="delete-link">Album Löschen</a>
+                    <?php else: ?>
+                        <h4>Keine Songs vorhanden</h4>
+                        <div>
+                            <a href="<?=path_to("/song/new?album=${album_id}")?>" class="add-link right">Songs hinzufügen</a>
+                        </div>
+                    <?php endif ?>
+                    <a href="<?=path_to("/delete?id=${album_id}")?>" class="delete-link">Album Löschen</a>
                 </div>
             </div>
 

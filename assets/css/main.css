@@ -178,6 +178,11 @@ button:disabled:hover {
     color: var(--error);
 }
 
+.add-link {
+    color: var(--primary);
+    margin-top: 1rem;
+}
+
 a {
     text-decoration: none;
     display: inline-block;
@@ -219,11 +224,6 @@ a:hover {
     border-radius: 1rem;
     padding: 1rem;
     transition: transform .25s linear, box-shadow .25s linear;
-}
-
-.album.hover:hover {
-    transform: translate(-0.4rem, -0.4rem);
-    box-shadow: .8rem .8rem .1rem rgb(214, 214, 214);
 }
 
 .album-cover {

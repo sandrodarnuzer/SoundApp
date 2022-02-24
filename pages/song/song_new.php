@@ -1,28 +1,32 @@
+<?php
+    if (!isset($_GET['album'])) redirect('/');
+    $album_id = $_GET['album'];
+
+    $result = Database::query(
+        'SELECT id, title FROM album WHERE id=?',
+        'i',
+        $album_id,
+    );
+
+    if ($result->num_rows < 1) redirect('/');
+    $album = $result->fetch_assoc();
+?>
 <main>
     <div class="center">
-        <form action="<?=path_to('/create')?>" method="post" enctype="multipart/form-data" name="albumform">
+        <form action="<?=path_to('/song/create')?>" method="post" enctype="multipart/form-data" name="songform">
             <div class="form-container">
     
+                <h2>Songs hinzufügen</h2>
+                <h3><?=$album['title']?></h3>
+                <input type="hidden" name="album" value="<?=$album_id?>">
                 <div class="form-item">
-                    <label for="albumtitle">Titel</label>
-                    <input type="text" name="albumtitle" id="albumtitle" required>
-                </div>
-                <div class="form-item">
-                    <label for="albumdescription">Beschreibung</label>
-                    <textarea name="albumdescription" id="albumdescription" cols="30" rows="10" required></textarea>
-                </div>
-                <div class="form-item">
-                    <label for="albumcover">Album Cover</label>
-                    <input type="file" name="albumcover" id="albumcover" accept=".jpeg, .jpg, .png, .gif" required>
-                </div>
-                <div class="form-item">
-                    <label for="albumsongs">Songs</label>
+                    <label for="albumsongs">Musiktitel</label>
                     <button type="button" id="addsong">Add</button>
                     <input type="hidden" name="songsadded" id="songsadded">
                 </div>
                 <div class="songfiles"></div>
                 <div class="form-item">
-                    <button class="large" type="button" name="createalbum" id="createalbum">Erstellen</button>
+                    <button class="large" type="button" name="createsongs" id="createsongs">Hinzufügen</button>
                 </div>
                 <span id="error-message"></span>
             </div>
@@ -33,8 +37,8 @@
     let songsAdded = 0;
     const songFiles = document.querySelector('.songfiles');
     const buttonAddSong = document.getElementById('addsong');
-    const buttonCreateAlbum = document.getElementById('createalbum');
-    const albumForm = document.forms['albumform'];
+    const buttonCreateSongs = document.getElementById('createsongs');
+    const songForm = document.forms['songform'];
 
     buttonAddSong.addEventListener('click', () => {
         const songFile = document.createElement('div');
@@ -54,12 +58,12 @@
         songsAdded++;
     });
     
-    buttonCreateAlbum.addEventListener('click', () => {
-        if (songFiles.childElementCount < 1 || !albumForm.checkValidity()) {
+    buttonCreateSongs.addEventListener('click', () => {
+        if (songFiles.childElementCount < 1 || !songForm.checkValidity()) {
             document.getElementById('error-message').innerText = "Formular nicht korrekt ausgefüllt";
             return;
         }
         document.getElementById('songsadded').value = songsAdded;
-        albumForm.submit();
+        songForm.submit();
     });
 </script>
