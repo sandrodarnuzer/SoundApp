@@ -70,7 +70,6 @@ if ($result->num_rows > 0) {
 
     songs.forEach(song => {
         const songNr = parseInt(song.dataset.song);
-        console.log(songNr);
         const buttonPlay = song.querySelector(".song-buttons .button-play");
         const buttonStop = song.querySelector(".song-buttons .button-stop");
         const audio = song.querySelector("audio");

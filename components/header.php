@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="<?=path_to('/assets/css/main.css')?>">
     <title>SoundApp</title>
+    <link rel="shortcut icon" href="<?=path_to('/assets/favicon.ico')?>"/>
 </head>
 <body>
 <nav>
