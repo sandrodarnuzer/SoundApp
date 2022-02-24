@@ -15,6 +15,7 @@ $items = array(
 $environments = array(
     'production',
     'test',
+    'uk',
 );
 
 $output_folder = 'dist';
