@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="<?=path_to('/assets/css/main.css')?>">
     <title>SoundApp</title>
 </head>
 <body>
 <nav>
-    <img src="assets/img/sound-bars-pulse.png" class="logo" alt="">
+    <img src="<?=path_to('/assets/img/sound-bars-pulse.png')?>" class="logo" alt="">
     <div class="nav-list">
         <div class="nav-item">
             <a href="<?=path_to('/')?>" class="nav-link">Alle Alben</a>

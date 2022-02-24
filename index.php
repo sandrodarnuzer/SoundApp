@@ -15,12 +15,13 @@ if (Config::AUTH) {
 }
 
 Database::connect();
-Router::get('/', 'album/album_index');
 
-// New Album
+// Album
+Router::get('/', 'album/album_index');
 Router::get('/new', 'album/album_new');
 Router::post('/create', 'album/album_create');
-
 Router::get('/delete', 'album/album_delete');
-
 Router::get('/show', 'album/album_show');
+
+// Song
+Router::get('/song/delete', 'song/song_delete');

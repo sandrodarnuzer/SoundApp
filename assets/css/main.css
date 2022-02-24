@@ -160,6 +160,10 @@ button:disabled:hover {
     padding: .5em 1em;
 }
 
+.button-delete {
+    background-color: var(--error);
+}
+
 .control-buttons img {
     width: 16px;
 }
@@ -246,7 +250,7 @@ a:hover {
 
 .song {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr;
     column-gap: 1rem;
 }
 .song-title {

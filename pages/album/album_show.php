@@ -41,7 +41,7 @@ if (isset($_GET['id'])) {
                     <h2><?=$album['title']?></h2>
                     <?php
                         $result = Database::query(
-                            "SELECT name, song_file, fid_album FROM songs WHERE fid_album=?",
+                            "SELECT id, name, song_file, fid_album FROM songs WHERE fid_album=?",
                             'i',
                             $album_id,
                         );
@@ -51,6 +51,8 @@ if (isset($_GET['id'])) {
                                 return array(
                                     'name' => $song['name'],
                                     'file' => get_file_path($song['song_file'], $song['fid_album']),
+                                    'album' => $song['fid_album'],
+                                    'id' => $song['id'],
                                 );
                             }, $songs);
                         }
@@ -67,6 +69,7 @@ if (isset($_GET['id'])) {
                                     <div class="song-buttons right">
                                         <button class="button-play control-buttons"><img src="assets/img/play.png" alt=""></button>
                                         <button class="button-queue control-buttons"><img src="assets/img/add-list.png" alt=""></button>
+                                        <a href="<?=path_to("/song/delete?id=${song['id']}&album=${song['album']}")?>"><button class="control-buttons button-delete"><img src="assets/img/trash.png" alt=""></button></a>
                                     </div>
                                 </div>
                             <?php endforeach ?>
