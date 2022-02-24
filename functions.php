@@ -44,6 +44,7 @@ function get_files(array $files, array $data) {
             yield array(
                 'name' => $data["albumsongname-${i}"],
                 'file' => $files["albumsongfile-${i}"]['tmp_name'],
+                'file_name' => $files["albumsongfile-${i}"]['name'],
             );
         }
     }
